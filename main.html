@@ -1,74 +1,27 @@
 <!DOCTYPE html>
-
-<html>
-  <head>
-    <link rel="stylesheet" href="styles.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
-      crossorigin="anonymous"
-    />
-  </head>
-
-  <body>
-    <!-- the entire body must be written by student -->
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promise Table</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+</head>
+<body>
     <table class="table table-striped table-hover table-bordered">
-      <thead>
-        <tr>
-          <th>Promise Name</th>
-          <th>Time taken (s)</th>
-        </tr>
-      </thead>
-      <tbody id="output"></tbody>
+        <thead>
+            <tr>
+                <th>Promise Name</th>
+                <th>Time taken (s)</th>
+            </tr>
+        </thead>
+        <tbody id="output">
+            <tr>
+                <td colspan="2">Loading...</td>
+            </tr>
+        </tbody>
     </table>
 
-    <script type="text/javascript" src="./script.js"></script>
-    <script
-		// Function to generate a random delay between 1 and 3 seconds
-function randomDelay() {
-    return Math.floor(Math.random() * 3000) + 1000; // Returns a number between 1000 and 3000 ms
-}
-
-// Create an array of three promises
-const promises = Array.from({ length: 3 }, (_, i) => {
-    return new Promise((resolve) => {
-        const delay = randomDelay();
-        setTimeout(() => {
-            resolve({ promiseName: `Promise ${i + 1}`, time: (delay / 1000).toFixed(3) }); // Resolve with name and time
-        }, delay);
-    });
-});
-
-// Add initial loading row
-const output = document.getElementById('output');
-output.innerHTML = '<tr><td colspan="2">Loading...</td></tr>';
-
-// Use Promise.all to wait for all promises to resolve
-Promise.all(promises).then((results) => {
-    // Calculate total time taken
-    const totalTime = results.reduce((sum, result) => sum + parseFloat(result.time), 0).toFixed(3);
-    
-    // Clear loading row
-    output.innerHTML = '';
-
-    // Populate the table with results
-    results.forEach(result => {
-        const row = document.createElement('tr');
-        row.innerHTML = `<td>${result.promiseName}</td><td>${result.time}</td>`;
-        output.appendChild(row);
-    });
-
-    // Add total row
-    const totalRow = document.createElement('tr');
-    totalRow.innerHTML = `<td>Total</td><td>${totalTime}</td>`;
-    output.appendChild(totalRow);
-});
-
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
-      crossorigin="anonymous"
-		
-    ></script>
-  </body>
+    <script src="script.js"></script>
+</body>
 </html>
