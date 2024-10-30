@@ -3,25 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promise Table</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+    <title>Promise Table Example</title>
 </head>
 <body>
-    <table class="table table-striped table-hover table-bordered">
+    <table border="1">
         <thead>
             <tr>
-                <th>Promise Name</th>
-                <th>Time taken (s)</th>
+                <th>Promise</th>
+                <th>Time (seconds)</th>
             </tr>
         </thead>
-        <tbody id="output">
+        <tbody>
             <tr>
                 <td colspan="2">Loading...</td>
             </tr>
         </tbody>
     </table>
 
-    <script src="script.js"></script>
+    <script>
+        // Function to create a promise that resolves after a random time between 1 and 3 seconds
+        function createPromise(index) {
+            return new Promise((resolve) => {
+                const time = Math.random() * 2 + 1; // random time between 1 and 3
+                setTimeout(() => {
+                    resolve({ index: `Promise ${index}`, time: time.toFixed(3) });
+                }, time * 1000);
+            });
+        }
+
+        // Create an array of promises
+        const promises = [createPromise(1), createPromise(2), createPromise(3)];
+
+        // Wait for all promises to resolve
+        Promise.all(promises).then((results) => {
+            // Remove the loading row
+            const tbody = document.querySelector('tbody');
+            tbody.innerHTML = '';
+
+            // Add rows for each resolved promise
+            let totalTime = 0;
+            results.forEach(result => {
+                totalTime += parseFloat(result.time);
+                const row = `<tr>
+                                <td>${result.index}</td>
+                                <td>${result.time}</td>
+                             </tr>`;
+                tbody.innerHTML += row;
+            });
+
+            // Add the total row
+            const totalRow = `<tr>
+                                <td>Total</td>
+                                <td>${totalTime.toFixed(3)}</td>
+                             </tr>`;
+            tbody.innerHTML += totalRow;
+        });
+    </script>
 </body>
 </html>
